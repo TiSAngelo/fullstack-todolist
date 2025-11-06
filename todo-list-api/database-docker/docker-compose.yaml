@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  local-postgres-compose:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: Senha123
+      POSTGRES_DB: todoDatabase
+    ports:
+      - "5500:5432"
+    networks:
+      - postgres-compose-network
+
+networks:
+  postgres-compose-network:
+    driver: bridge
