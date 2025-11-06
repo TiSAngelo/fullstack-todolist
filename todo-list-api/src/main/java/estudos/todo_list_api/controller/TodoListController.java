@@ -1,9 +1,10 @@
 package estudos.todo_list_api.controller;
 import estudos.todo_list_api.dto.TaskDto;
-import estudos.todo_list_api.facade.TaskFacade;
+import estudos.todo_list_api.service.TaskService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,36 +13,38 @@ import java.util.List;
 @RequestMapping(value="/todo", produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 public class TodoListController {
-    @Autowired
-    private TaskFacade taskFacade;
+
+    private final TaskService taskService;
+
+    public TodoListController(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     @PostMapping
-    @ResponseBody
-    public TaskDto create (@RequestBody TaskDto taskDto) {
-        return taskFacade.create(taskDto);
+    public ResponseEntity<TaskDto> create (@RequestBody TaskDto taskDto) {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(taskService.create(taskDto));
     }
 
     @PutMapping("/{taskId}")
-    @ResponseBody
-    public TaskDto update (@PathVariable("taskId") Long taskId, @RequestBody TaskDto taskDto) {
-        return taskFacade.update(taskDto, taskId);
+    public ResponseEntity<TaskDto> update (@PathVariable("taskId") Long taskId, @RequestBody TaskDto taskDto) {
+        return ResponseEntity.ok(taskService.update(taskDto, taskId));
     }
 
     @GetMapping
-    @ResponseBody
-    public List<TaskDto> getAll() {
-        return taskFacade.getAll();
+    public ResponseEntity <List<TaskDto>> getAll() {
+        return ResponseEntity.ok(taskService.getAll());
     }
 
     @GetMapping("/by-type/{typeId}")
-    @ResponseBody
-    public List<TaskDto> getByTypeId (@PathVariable("typeId") Long typeId) {
-        return taskFacade.getByType(typeId);
+    public ResponseEntity <List<TaskDto>> getByTypeId (@PathVariable("typeId") Long typeId) {
+        return ResponseEntity.ok(taskService.getByType(typeId));
     }
 
     @DeleteMapping("/{taskId}")
-    @ResponseBody
-    public String delete (@PathVariable("taskId") Long taskId) {
-        return taskFacade.delete(taskId);
+    public ResponseEntity <Void> delete (@PathVariable("taskId") Long taskId) {
+        taskService.delete(taskId);
+        return ResponseEntity.noContent().build();
     }
 }
