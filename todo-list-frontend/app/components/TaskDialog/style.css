@@ -1,0 +1,16 @@
+.select-option {
+    background-color: #333333;
+    padding: 4px 0;
+}
+
+.select-option:hover {
+    background-color: #444444;
+}
+
+.rounded-first {
+    border-radius: 4px 4px 0 0;
+}
+
+.rounded-last {
+    border-radius: 0 0 4px 4px;
+}
