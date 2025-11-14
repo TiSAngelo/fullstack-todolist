@@ -45,6 +45,7 @@ export default function Home() {
       const data = await response.json();
       setTodos(data);
     } catch (error) {
+      setTodos([]);
       console.error("Erro ao buscar todos:", error);
     } finally {
       setLoading(false);
@@ -170,15 +171,18 @@ export default function Home() {
           Nova tarefa
         </button>
       </header>
-      <main className={`w-full max-w-3xl mx-auto ${headerPaddingTop} py-8`}>
-        <TodoList
-          todoList={todos}
-          onOpenTaskDialog={handleShowDialog}
-          setEditTask={handleSetNewTask}
-          onSelectTask={handleSelectTask}
-          onDeleteClick={handleDeleteClick}
-        />
-      </main>
+      { todos.length > 0 &&
+        <main className={`w-full max-w-3xl mx-auto ${headerPaddingTop} py-8`}>
+          <TodoList
+            todoList={todos}
+            onOpenTaskDialog={handleShowDialog}
+            setEditTask={handleSetNewTask}
+            onSelectTask={handleSelectTask}
+            onDeleteClick={handleDeleteClick}
+          />
+        </main>
+      }
+
         { showEditDialog &&
           <div className="fixed inset-0 bg-black/30 backdrop-blur-xl z-60 flex justify-center items-center" style={{height: '100vh'}}>
               <TaskDialog
