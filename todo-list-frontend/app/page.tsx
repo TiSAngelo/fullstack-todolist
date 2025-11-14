@@ -45,7 +45,6 @@ export default function Home() {
       const data = await response.json();
       setTodos(data);
     } catch (error) {
-      setTodos([]);
       console.error("Erro ao buscar todos:", error);
     } finally {
       setLoading(false);

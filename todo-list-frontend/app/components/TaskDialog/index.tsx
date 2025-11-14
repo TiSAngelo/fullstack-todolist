@@ -30,7 +30,7 @@ export default function TaskDialog (
         if (isNewTask) {
             return {
             id: 0,
-            name: "",
+            name: "Tarefa doméstica",
             typeId: 1,
             description: ""
             };
