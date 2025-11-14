@@ -2,6 +2,7 @@ version: '3'
 
 services:
   local-postgres-compose:
+    container_name: todo-list-pg
     image: postgres
     environment:
       POSTGRES_PASSWORD: Senha123
